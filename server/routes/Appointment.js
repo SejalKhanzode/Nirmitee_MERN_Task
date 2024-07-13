@@ -5,8 +5,8 @@ const router = express.Router();
 // Import the required controllers and middleware functions
 const {
     addAppointment,
-    deleteAppointment,
-    getAllAppointments
+    deleteAppointment,updateAppointment,
+    getAllAppointments,
 } = require("../controllers/Appointment")
 
 const {auth, isUser, isDoctor} = require("../middleware/auth")
@@ -23,6 +23,7 @@ function isDoctororUser(req, res, next) {
 
 router.post("/addAppointment", auth, isUser, addAppointment);
 router.delete("/deleteAppointment", auth, isUser, deleteAppointment)
+router.put('/updateAppointment/:id', auth, isUser, updateAppointment);
 
 router.get("/getAllAppointments",auth, isDoctororUser, getAllAppointments )
 
