@@ -21,48 +21,45 @@ exports.signUp = async (req, res) => {
             return res.status(403).json({
                 success: false,
                 message: "All fields are required",
-            })
+            });
         }
 
         // check if user already exists
         const existingUser = await User.findOne({ email });
 
         if (existingUser) {
-            return res.status().json({
+            return res.status(409).json({
                 success: false,
                 message: "User already exists, Please login to continue"
             });
         }
 
         const hashedPassword = await bcrypt.hash(password, 10);
-        // create the user
-        let approved = "";
-        approved === "Owner" ? (approved = false) : (approved = true);
 
-       
+        // Assuming `approved` should be `true` for all new signups, adjust as needed
+        const approved = true; // or adjust your logic for setting `approved` correctly
 
         const user = await User.create({
-           name,
+            name,
             email,
             password: hashedPassword,
-            accountType: accountType,
-            approved: approved,
+            accountType,
+            approved,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${name}`,
-        })
+        });
 
-        // return res
+        // return response
         return res.status(200).json({
             success: true,
             message: "User has been successfully registered",
             user,
         });
-    }
-    catch (err) {
+    } catch (err) {
         console.log(err);
         return res.status(500).json({
             success: false,
             message: "User can not be registered. Please try again",
-        })
+        });
     }
 };
 

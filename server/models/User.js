@@ -17,7 +17,7 @@ const userSchema = new mongoose.Schema({
   },
   accountType: {
     type: String,
-    enum: ["Doctor", "Receptionist"],
+    enum: ["Doctor", "User"],
     required: true,
   },
   active: {

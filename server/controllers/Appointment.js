@@ -15,15 +15,15 @@ exports.addAppointment = async (req, res) => {
     }
 
     // Find the user by userId and accountType 'Receptionist'
-    const receptionistDetails = await User.findById(userId);
+    const userDetails = await User.findById(userId);
     //   console.log(userId)
     if (
-      !receptionistDetails ||
-      !receptionistDetails.accountType === "Receptionist"
+      !userDetails ||
+      !(userDetails.accountType === "User")
     ) {
       return res.status(404).json({
         success: false,
-        message: "Only receptionistDetails can Add Appointment",
+        message: "Only User can Add Appointment",
       });
     }
 

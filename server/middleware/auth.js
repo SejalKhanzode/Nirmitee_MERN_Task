@@ -49,34 +49,34 @@ exports.isDoctor = async (req, res, next) => {
 			.json({ success: false, message: `User Role Can't be Verified` });
 	}
 };
-exports.isAdmin = async (req, res, next) => {
-	try {
-		const userDetails = await User.findOne({ email: req.user.email });
+// exports.isPatient = async (req, res, next) => {
+// 	try {
+// 		const userDetails = await User.findOne({ email: req.user.email });
 
-		if (userDetails.accountType !== "Admin") {
-			return res.status(401).json({
-				success: false,
-				message: "This is a Protected Route for Admin",
-			});
-		}
-		next();
-	} catch (error) {
-		return res
-			.status(500)
-			.json({ success: false, message: `User Role Can't be Verified` });
-	}
-};
-exports.isReceptionist = async (req, res, next) => {
+// 		if (userDetails.accountType !== "Patient") {
+// 			return res.status(401).json({
+// 				success: false,
+// 				message: "This is a Protected Route for Patient",
+// 			});
+// 		}
+// 		next();
+// 	} catch (error) {
+// 		return res
+// 			.status(500)
+// 			.json({ success: false, message: `User Role Can't be Verified` });
+// 	}
+// };
+exports.isUser = async (req, res, next) => {
 	try {
 		const userDetails = await User.findOne({ email: req.user.email });
 		console.log(userDetails);
 
 		console.log(userDetails.accountType);
 
-		if (userDetails.accountType !== "Receptionist" ) {
+		if (userDetails.accountType !== "User" ) {
 			return res.status(401).json({
 				success: false,
-				message: "This is a Protected Route for Receptionist",
+				message: "This is a Protected Route for User",
 			});
 		}
 		next();

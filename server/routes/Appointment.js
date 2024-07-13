@@ -9,21 +9,21 @@ const {
     getAllAppointments
 } = require("../controllers/Appointment")
 
-const {auth,isReceptionist, isAdmin, isDoctor} = require("../middleware/auth")
+const {auth, isUser, isDoctor} = require("../middleware/auth")
 
-function isReceptionistorDoctor(req, res, next) {
-    if (req.user && (req.user.accountType === 'Receptionist' || req.user.accountType === 'Doctor')) {
+function isDoctororUser(req, res, next) {
+    if (req.user && (req.user.accountType === 'User' || req.user.accountType === 'Doctor')) {
       return next();
     }
     return res.status(403).json({
       success: false,
-      message: 'Unauthorized access: Receptionist or Doctor rights required'
+      message: 'Unauthorized access: Doctor and User rights required'
     });
   }
 
-router.post("/addAppointment", auth, isReceptionist, addAppointment);
-router.delete("/deleteAppointment", auth, isReceptionist, deleteAppointment)
+router.post("/addAppointment", auth, isUser, addAppointment);
+router.delete("/deleteAppointment", auth, isUser, deleteAppointment)
 
-router.get("/getAllAppointments", auth, isReceptionistorDoctor, getAllAppointments )
+router.get("/getAllAppointments",auth, isDoctororUser, getAllAppointments )
 
 module.exports = router
